@@ -2,6 +2,7 @@ package com.teamtreehouse.contactmgr;
 
 import com.teamtreehouse.contactmgr.model.Contact;
 import com.teamtreehouse.contactmgr.model.Contact.ContactBuilder;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -22,5 +23,19 @@ public class Application {
                 .withEmail("rama@teamtreehouse.com")
                 .withPhone(7735556666L)
                 .build();
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Begin a transaction
+        session.beginTransaction();
+
+        // Use the session to save the contact
+        session.save(contact);
+
+        // Commit the transaction
+        session.getTransaction().commit();
+
+        // Close the session
+        session.close();
     }
 }
